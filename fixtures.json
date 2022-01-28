@@ -1,0 +1,78 @@
+[
+  {
+    "model": "viewer.genre",
+    "pk": 1,
+    "fields": {
+      "name": "Horror"
+    }
+  },
+  {
+    "model": "viewer.genre",
+    "pk": 2,
+    "fields": {
+      "name": "Fantasy"
+    }
+  },
+  {
+    "model": "viewer.genre",
+    "pk": 3,
+    "fields": {
+      "name": "Action"
+    }
+  },
+  {
+    "model": "viewer.genre",
+    "pk": 4,
+    "fields": {
+      "name": "Comedy"
+    }
+  },
+  {
+    "model": "viewer.movie",
+    "pk": 1,
+    "fields": {
+      "title": "Godfather",
+      "genre": 3,
+      "rating": 9,
+      "released": "1972-12-31",
+      "description": "Fajny film, polecam",
+      "created": "2022-01-23T10:20:59.648Z"
+    }
+  },
+  {
+    "model": "viewer.movie",
+    "pk": 2,
+    "fields": {
+      "title": "Forrest Gump",
+      "genre": 4,
+      "rating": 3,
+      "released": "1994-11-04",
+      "description": "Film o ziomku ktory biegal.",
+      "created": "2022-01-23T10:26:46.753Z"
+    }
+  },
+  {
+    "model": "viewer.movie",
+    "pk": 3,
+    "fields": {
+      "title": "Blade Runner",
+      "genre": 3,
+      "rating": 8,
+      "released": "1982-06-25",
+      "description": "Koles goni roboty.",
+      "created": "2022-01-23T10:38:22.713Z"
+    }
+  },
+  {
+    "model": "viewer.movie",
+    "pk": 4,
+    "fields": {
+      "title": "Showshang Redemption",
+      "genre": 3,
+      "rating": 10,
+      "released": "1994-09-10",
+      "description": "Ucieczka z wiezienia.",
+      "created": "2022-01-23T10:40:24.463Z"
+    }
+  }
+]

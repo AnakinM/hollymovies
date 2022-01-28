@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Hollywood movies</h1>
+<div class="card">
+  <div class="card-header">
+    List of available movies:
+  </div>
+  <ul class="list-group list-group-flush">
+  {% for movie in object_list %}
+    <li class="list-group-item">{{ movie.title }} was released in {{ movie.released }}. Genre: {{ movie.genre.name }} Rating {{ movie.rating }}</li>
+  {% endfor %}
+  </ul>
+</div>
+{% endblock %}
