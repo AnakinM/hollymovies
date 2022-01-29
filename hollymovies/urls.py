@@ -26,8 +26,6 @@ admin.site.register(Movie)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('search/', search, name="search"),
-    path('movies/new/', MovieCreateView.as_view(), name="create_movie"),
-    path('movies/', MoviesView.as_view(), name='movies'),
-    path('contact/', TemplateView.as_view(template_name="contact.html"), name="contact"),
-    path('', TemplateView.as_view(template_name="home.html"), name="index"),
+    path('create/', MovieCreateView.as_view(), name="create_movie"),
+    path('', MoviesView.as_view(), name='index'),
 ]
