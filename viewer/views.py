@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import ListView, FormView, TemplateView
 
 from viewer.forms import MovieForm
@@ -17,6 +18,7 @@ def search(request):
 
 # def home(request):
 #     return render(request, "home.html")
+
 
 # class HomeView(TemplateView):
 #     template_name = "home.html"
@@ -38,3 +40,11 @@ class MoviesView(ListView):
 class MovieCreateView(FormView):
     template_name = 'form.html'
     form_class = MovieForm
+
+
+class GreetingView(View):
+    greeting = "Good morning"
+
+    def get(self, request):
+        return HttpResponse(self.greeting)
+
