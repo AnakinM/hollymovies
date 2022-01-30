@@ -30,6 +30,6 @@ urlpatterns = [
     path('genre/new', GenreCreateView.as_view(), name="create_genre"),
     path('movies/', MoviesView.as_view(), name="movies"),
     path('contact/', ContactView.as_view(), name='contact'),
-    path('greeting/', GreetingView.as_view(greeting="Hello"), name='contact'),
+    path('greeting/', GreetingView.as_view(greeting="Hello"), name='greeting'),
     path('', TemplateView.as_view(template_name="home.html"), name='index'),
 ]
