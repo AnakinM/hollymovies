@@ -4,8 +4,8 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, FormView, TemplateView
 
-from viewer.forms import MovieForm
-from viewer.models import Movie
+from viewer.forms import MovieForm, GenreForm
+from viewer.models import Movie, Genre
 
 
 def search(request):
@@ -38,7 +38,7 @@ class MoviesView(ListView):
 
 
 class MovieCreateView(FormView):
-    template_name = 'new_movie_form.html'
+    template_name = 'forms/new_movie_form.html'
     form_class = MovieForm
     success_url = reverse_lazy('create_movie')
 
@@ -52,6 +52,21 @@ class MovieCreateView(FormView):
             released=cleaned_data['released'],
             description=cleaned_data['description']
         )
+        return result
+
+
+class GenreCreateView(FormView):
+    template_name = "forms/new_genre_form.html"
+    form_class = GenreForm
+    success_url = reverse_lazy('index')
+
+    def form_valid(self, form):
+        result = super().form_valid(form)
+        cleaned_data = form.cleaned_data
+        new_genre = Genre(
+            name=cleaned_data['name']
+        )
+        new_genre.save()
         return result
 
 

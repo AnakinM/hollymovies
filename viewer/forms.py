@@ -9,3 +9,7 @@ class MovieForm(Form):
     rating = IntegerField(min_value=1, max_value=10)
     released = DateField(widget=NumberInput(attrs={'type': 'date'}))
     description = CharField(widget=Textarea, required=False)
+
+
+class GenreForm(Form):
+    name = CharField(max_length=40)
