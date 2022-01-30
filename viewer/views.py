@@ -38,7 +38,7 @@ class MoviesView(ListView):
 
 
 class MovieCreateView(FormView):
-    template_name = 'forms/new_movie_form.html'
+    template_name = 'forms/form.html'
     form_class = MovieForm
     success_url = reverse_lazy('create_movie')
 
@@ -56,7 +56,7 @@ class MovieCreateView(FormView):
 
 
 class GenreCreateView(FormView):
-    template_name = "forms/new_genre_form.html"
+    template_name = "forms/form.html"
     form_class = GenreForm
     success_url = reverse_lazy('index')
 
