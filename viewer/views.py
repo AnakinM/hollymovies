@@ -1,11 +1,15 @@
+from logging import getLogger
+
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import ListView, FormView, TemplateView
+from django.views.generic import ListView, FormView, TemplateView, CreateView, UpdateView, DeleteView, DetailView
 
 from viewer.forms import MovieForm, GenreForm
 from viewer.models import Movie, Genre
+
+LOG = getLogger()
 
 
 def search(request):
@@ -32,27 +36,42 @@ class ContactView(TemplateView):
     template_name = "contact.html"
 
 
+class MovieDetailView(DetailView):
+    template_name = "movie_detail_view.html"
+    # queryset = Movie.objects.filter()
+    model = Movie
+
+
 class MoviesView(ListView):
     template_name = "movies.html"
     model = Movie
 
 
-class MovieCreateView(FormView):
+class MovieCreateView(CreateView):
     template_name = 'forms/form.html'
     form_class = MovieForm
     success_url = reverse_lazy('create_movie')
 
-    def form_valid(self, form):
-        result = super().form_valid(form)
-        cleaned_data = form.cleaned_data
-        Movie.objects.create(
-            title=cleaned_data['title'],
-            genre=cleaned_data['genre'],
-            rating=cleaned_data['rating'],
-            released=cleaned_data['released'],
-            description=cleaned_data['description']
-        )
-        return result
+    def form_invalid(self, form):
+        LOG.warning("User provided invalid data.")
+        return super().form_invalid(form)
+
+
+class MovieUpdateView(UpdateView):
+    template_name = "forms/form.html"
+    form_class = MovieForm
+    model = Movie
+    success_url = reverse_lazy('index')
+
+    def form_invalid(self, form):
+        LOG.warning("User provided invalid data while updating a movie.")
+        return super().form_invalid(form)
+
+
+class MovieDeleteView(DeleteView):
+    template_name = "forms/delete_movie_form.html"
+    model = Movie
+    success_url = reverse_lazy('index')
 
 
 class GenreCreateView(FormView):
@@ -75,4 +94,3 @@ class GreetingView(View):
 
     def get(self, request):
         return HttpResponse(self.greeting)
-
