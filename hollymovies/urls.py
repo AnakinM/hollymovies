@@ -14,11 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.contrib.auth.views import LogoutView
 from django.urls import path
 from django.views.generic import TemplateView
 
 from viewer.views import search, MoviesView, MovieCreateView, ContactView, GreetingView, GenreCreateView, \
-    MovieUpdateView, MovieDeleteView, MovieDetailView
+    MovieUpdateView, MovieDeleteView, MovieDetailView, SubmittableLoginView
 from viewer.models import Genre, Movie
 
 admin.site.register(Genre)
@@ -27,6 +28,8 @@ admin.site.register(Movie)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('search/', search, name="search"),
+    path('accounts/login/', SubmittableLoginView.as_view(), name="login"),
+    path('accounts/logout/', LogoutView.as_view(), name="logout"),
     path('movies/', MoviesView.as_view(), name="movies"),
     path('movies/new', MovieCreateView.as_view(), name="create_movie"),
     path('movies/<int:pk>', MovieDetailView.as_view(), name="read_movie"),
