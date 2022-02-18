@@ -94,3 +94,7 @@ class GreetingView(View):
 
     def get(self, request):
         return HttpResponse(self.greeting)
+
+# Listowanie gatunków filmów
+# Updatowanie danego gatunku filmu
+# Usuwanie danego gatunku filmu
