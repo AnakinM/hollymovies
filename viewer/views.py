@@ -44,10 +44,6 @@ class MovieDetailView(DetailView):
     model = Movie
 
 
-class SubmittableLoginView(LoginView):
-    template_name = "forms/form.html"
-
-
 class MoviesView(ListView):
     template_name = "movies.html"
     model = Movie
