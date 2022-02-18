@@ -46,6 +46,7 @@
                 <a class="dropdown-item text-right" href="{% url 'accounts:logout' %}">Logout</a>
                 <a class="dropdown-item text-right" href="{% url 'accounts:password_change' %}">Change password</a>
                 <a class="dropdown-item text-right" href="{% url 'accounts:update_profile' user.id %}">Update profile</a>
+                <a class="dropdown-item text-right" href="{% url "accounts:view_profile" user.id %}">View profile</a>
               </div>
           {% else %}
             <a class="nav-link active dropdown-toggle" href="#" id="dropdownUserMenu" data-bs-toggle="dropdown">

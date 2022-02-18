@@ -22,11 +22,17 @@ class SignUpForm(UserCreationForm):
 
 class UserProfileUpdateForm(ModelForm):
 
+    GENDER_CHOICES = [
+        ('male', 'Male'),
+        ('female', 'Female'),
+        ('other', 'Other'),
+    ]
+
     class Meta:
         model = Profile
         fields = '__all__'
 
-    gender = ChoiceField(choices=['Male', 'Female', 'Other'])
+    gender = ChoiceField(choices=GENDER_CHOICES, required=False)
     biography = CharField(
         label='Tell us your story with movies', widget=Textarea, required=False
     )
