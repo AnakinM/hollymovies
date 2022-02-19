@@ -18,7 +18,7 @@ from django.urls import path
 from django.views.generic import TemplateView
 
 from viewer.views import search, MoviesView, MovieCreateView, ContactView, GreetingView, GenreCreateView, \
-    MovieUpdateView, MovieDeleteView, MovieDetailView, GenreListView, GenreUpdateView
+    MovieUpdateView, MovieDeleteView, MovieDetailView, GenreListView, GenreUpdateView, SubmittableLoginView
 from viewer.models import Genre, Movie
 
 admin.site.register(Genre)
@@ -26,6 +26,7 @@ admin.site.register(Movie)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/login/', SubmittableLoginView.as_view(), name='login'),
     path('search/', search, name="search"),
     path('movies/', MoviesView.as_view(), name="movies"),
     path('movies/new', MovieCreateView.as_view(), name="create_movie"),

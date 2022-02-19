@@ -1,10 +1,12 @@
 from logging import getLogger
 
+from django.contrib.auth.views import LoginView
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, FormView, TemplateView, CreateView, UpdateView, DeleteView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from viewer.forms import MovieForm, GenreForm
 from viewer.models import Movie, Genre
@@ -57,7 +59,7 @@ class MovieCreateView(CreateView):
         return super().form_invalid(form)
 
 
-class MovieUpdateView(UpdateView):
+class MovieUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "forms/form.html"
     form_class = MovieForm
     model = Movie
@@ -68,7 +70,7 @@ class MovieUpdateView(UpdateView):
         return super().form_invalid(form)
 
 
-class MovieDeleteView(DeleteView):
+class MovieDeleteView(LoginRequiredMixin, DeleteView):
     template_name = "forms/delete_movie_form.html"
     model = Movie
     success_url = reverse_lazy('index')
@@ -111,5 +113,6 @@ class GreetingView(View):
     def get(self, request):
         return HttpResponse(self.greeting)
 
-# Listowanie gatunków filmów
-# Updatowanie danego gatunku filmu
+
+class SubmittableLoginView(LoginView):
+    template_name = "forms/form.html"
