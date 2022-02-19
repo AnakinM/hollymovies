@@ -18,8 +18,7 @@ from django.urls import path, include
 from django.views.generic import TemplateView
 
 from accounts.models import Profile
-from viewer.views import search, MoviesView, MovieCreateView, ContactView, GreetingView, GenreCreateView, \
-    MovieUpdateView, MovieDeleteView, MovieDetailView, GenreListView, GenreUpdateView
+from viewer.views import search, ContactView, GreetingView
 from viewer.models import Genre, Movie
 
 admin.site.register(Genre)
@@ -29,15 +28,8 @@ admin.site.register(Profile)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
+    path('movies/', include('viewer.urls')),
     path('search/', search, name="search"),
-    path('movies/', MoviesView.as_view(), name="movies"),
-    path('movies/new', MovieCreateView.as_view(), name="create_movie"),
-    path('movies/<int:pk>', MovieDetailView.as_view(), name="read_movie"),
-    path('movies/<int:pk>/update', MovieUpdateView.as_view(), name="update_movie"),
-    path('movies/<int:pk>/delete', MovieDeleteView.as_view(), name="delete_movie"),
-    path('genres/', GenreListView.as_view(), name="genres"),
-    path('genres/new', GenreCreateView.as_view(), name="create_genre"),
-    path('genres/<int:pk>/update', GenreUpdateView.as_view(), name="update_genre"),
     path('contact/', ContactView.as_view(), name='contact'),
     path('greeting/', GreetingView.as_view(greeting="Hello"), name='greeting'),
     path('', TemplateView.as_view(template_name="home.html"), name='index'),

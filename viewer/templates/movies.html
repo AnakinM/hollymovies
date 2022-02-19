@@ -16,7 +16,7 @@
   </thead>
   <tbody>
   {% for movie in object_list %}
-    <tr onclick="window.location='{% url 'read_movie' movie.id %}'">
+    <tr onclick="window.location='{% url 'viewer:read_movie' movie.id %}'">
       <th scope="row">{{ movie.id }}</th>
       <td>{{ movie.title}}</td>
       <td>{{ movie.genre }}</td>

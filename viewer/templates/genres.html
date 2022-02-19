@@ -14,7 +14,7 @@
   {% for genre in object_list %}
     <tr>
       <th scope="row">{{ genre.id }}</th>
-        <td>{{ genre.name }} <a class="btn btn-success btn-sm float-end" href="{%  url "update_genre" genre.id %}">Update</a></td>
+        <td>{{ genre.name }} <a class="btn btn-success btn-sm float-end" href="{%  url "viewer:update_genre" genre.id %}">Update</a></td>
     </tr>
   {% endfor %}
   </tbody>

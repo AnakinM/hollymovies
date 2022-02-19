@@ -2,7 +2,9 @@
 
 {% block content %}
     <div class="container py-4">
-        {{ profile.user.username }}
-
+        <h2>{{ profile.user.username }}'s Profile</h2>
+        <hr>
+        <p><b>Gender:</b> {{ profile.gender|default:"Not specified" }}</p>
+        <p><b>Bio:</b> {{ profile.biography|default:"..." }}</p>
     </div>
 {% endblock %}
