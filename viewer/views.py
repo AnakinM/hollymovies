@@ -112,7 +112,3 @@ class GreetingView(View):
 
     def get(self, request):
         return HttpResponse(self.greeting)
-
-
-class SubmittableLoginView(LoginView):
-    template_name = "forms/form.html"
