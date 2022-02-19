@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
+from django.conf import settings
+from django.conf.urls.static import static
 
 from accounts.models import Profile
 from viewer.views import search, ContactView, GreetingView
@@ -35,3 +37,6 @@ urlpatterns = [
     path('greeting/', GreetingView.as_view(greeting="Hello"), name='greeting'),
     path('', TemplateView.as_view(template_name="home.html"), name='index'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -3,6 +3,7 @@
 {% block content %}
     <div class="container py-4">
         <h2>{{ profile.user.username }}'s Profile</h2>
+        <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
         <hr>
         <p><b>Gender:</b> {{ profile.gender|default:"Not specified" }}</p>
         <p><b>Bio:</b> {{ profile.biography|default:"..." }}</p>
