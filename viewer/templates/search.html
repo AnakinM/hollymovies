@@ -25,10 +25,6 @@
   </tbody>
 </table>
 {% endif %}
-{% if count != 1 %}
-    <p>Querry returned {{ count }} results.</p>
-{% else %}
-    <p>Querry returned {{ count }} result.</p>
-{% endif %}
+<p>Querry returned {{ count }} result{{ count|pluralize }}.</p>
 
 {% endblock content %}

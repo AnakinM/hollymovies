@@ -89,6 +89,11 @@ class GenreCreateView(FormView):
         return result
 
 
+class GenreListView(ListView):
+    template_name = "genres.html"
+    model = Genre
+
+
 class GreetingView(View):
     greeting = "Good morning"
 
@@ -97,4 +102,3 @@ class GreetingView(View):
 
 # Listowanie gatunków filmów
 # Updatowanie danego gatunku filmu
-# Usuwanie danego gatunku filmu

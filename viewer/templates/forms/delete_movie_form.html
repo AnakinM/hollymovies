@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<form method="post">
+<form method="post" class="py-4">
 {% csrf_token %}
 <p>
     Are you sure you wat to remove movie "{{ object.title }}" from the database?

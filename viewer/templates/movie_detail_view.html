@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {{ movie.title }}
+    <div class="container py-4">
+        <h2>{{ movie.title }}</h2>
+        <small>{{ movie.released.year }} - {{ movie.genre }} - {{ movie.rating }}/10 <i class="fa fa-star"></i></small>
+        <p><b>Released:</b> {{ movie.released|date:"d E Y" }}</p>
+        <hr>
+        <p>{{ movie.description }}</p>
+        <small>Description length: {{ movie.description|length }}</small>
+        <hr>
+        <a class="btn btn-primary" href="{% url "update_movie" movie.id %}">Update</a>
+        <a class="btn btn-danger" href="{% url "delete_movie" movie.id %}">Delete</a>
+    </div>
 {% endblock %}
-# TODO Napisać ...
