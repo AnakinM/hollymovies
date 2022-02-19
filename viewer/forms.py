@@ -53,5 +53,10 @@ class MovieForm(ModelForm):
         return result
 
 
-class GenreForm(Form):
+class GenreForm(ModelForm):
+
+    class Meta:
+        model = Genre
+        fields = '__all__'
+
     name = CharField(max_length=40)

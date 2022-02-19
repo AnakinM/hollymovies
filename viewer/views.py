@@ -94,6 +94,17 @@ class GenreListView(ListView):
     model = Genre
 
 
+class GenreUpdateView(UpdateView):
+    template_name = "forms/form.html"
+    form_class = GenreForm
+    model = Genre
+    success_url = reverse_lazy('index')
+
+    def form_invalid(self, form):
+        LOG.warning("User provided invalid data while updating a genre.")
+        return super().form_invalid(form)
+
+
 class GreetingView(View):
     greeting = "Good morning"
 
