@@ -1,12 +1,11 @@
 from logging import getLogger
 
-from django.contrib.auth.views import LoginView
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, FormView, TemplateView, CreateView, UpdateView, DeleteView, DetailView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 
 from viewer.forms import MovieForm, GenreForm
 from viewer.models import Movie, Genre
@@ -20,6 +19,12 @@ def search(request):
         data = Movie.objects.filter(title__contains=title)
         return render(request, "search.html", context={'data': data, 'count': data.count()})
     return render(request, "search.html", context={'data': None, 'count': 0})
+
+
+class StaffRequiredMixin(UserPassesTestMixin):
+
+    def test_func(self):
+        return self.request.user.is_staff
 
 
 class ContactView(TemplateView):
@@ -38,17 +43,18 @@ class MoviesView(ListView):
     paginate_by = 5
 
 
-class MovieCreateView(CreateView):
+class MovieCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     template_name = 'forms/form.html'
     form_class = MovieForm
     success_url = reverse_lazy('viewer:movies')
+    permission_required = 'viewer.add_movie'
 
     def form_invalid(self, form):
         LOG.warning("User provided invalid data.")
         return super().form_invalid(form)
 
 
-class MovieUpdateView(LoginRequiredMixin, UpdateView):
+class MovieUpdateView(LoginRequiredMixin, StaffRequiredMixin, UpdateView):
     template_name = "forms/form.html"
     form_class = MovieForm
     model = Movie
