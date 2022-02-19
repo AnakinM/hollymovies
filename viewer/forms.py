@@ -11,15 +11,15 @@ def capitalized_validator(value):
         raise ValidationError("Value must be capitalized.")
 
 
-def dupa_validator(value):
-    if "dupa" in value.lower():
-        raise ValidationError("Value contains restricted word.")
-
-
-def unique_words_validator(value):
-    word_list = value.strip('.').split(' ')
-    if len(set(word_list)) != len(word_list):
-        raise ValidationError("Description does not contain unique words.")
+# def dupa_validator(value):
+#     if "dupa" in value.lower():
+#         raise ValidationError("Value contains restricted word.")
+#
+#
+# def unique_words_validator(value):
+#     word_list = value.strip('.').split(' ')
+#     if len(set(word_list)) != len(word_list):
+#         raise ValidationError("Description does not contain unique words.")
 
 
 class PastMonthField(DateField):
@@ -42,15 +42,15 @@ class MovieForm(ModelForm):
 
     title = CharField(max_length=128, validators=[capitalized_validator])
     released = PastMonthField(widget=NumberInput(attrs={'type': 'date'}))
-    description = CharField(widget=Textarea, required=False, validators=[dupa_validator, unique_words_validator])
+    description = CharField(widget=Textarea, required=False)
 
-    def clean(self):
-        result = super().clean()
-        if result['genre'].name == "Comedy" and result['rating'] > 6:
-            self.add_error("genre", f"Can't be Comedy if rated {result['rating']}")
-            self.add_error("rating", f"Can't be rated {result['rating']} if genre is Comedy")
-            raise ValidationError("Comedies aren't so good to ba rated over 6")
-        return result
+    # def clean(self):
+    #     result = super().clean()
+    #     if result['genre'].name == "Comedy" and result['rating'] > 6:
+    #         self.add_error("genre", f"Can't be Comedy if rated {result['rating']}")
+    #         self.add_error("rating", f"Can't be rated {result['rating']} if genre is Comedy")
+    #         raise ValidationError("Comedies aren't so good to ba rated over 6")
+    #     return result
 
 
 class GenreForm(ModelForm):

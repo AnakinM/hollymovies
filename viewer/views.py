@@ -22,18 +22,6 @@ def search(request):
     return render(request, "search.html", context={'data': None, 'count': 0})
 
 
-# def home(request):
-#     return render(request, "home.html")
-
-
-# class HomeView(TemplateView):
-#     template_name = "home.html"
-
-
-# def contact(request):
-#     return render(request, "contact.html")
-
-
 class ContactView(TemplateView):
     template_name = "contact.html"
 
@@ -52,7 +40,7 @@ class MoviesView(ListView):
 class MovieCreateView(CreateView):
     template_name = 'forms/form.html'
     form_class = MovieForm
-    success_url = reverse_lazy('create_movie')
+    success_url = reverse_lazy('viewer:movies')
 
     def form_invalid(self, form):
         LOG.warning("User provided invalid data.")
@@ -63,7 +51,7 @@ class MovieUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "forms/form.html"
     form_class = MovieForm
     model = Movie
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('viewer:movies')
 
     def form_invalid(self, form):
         LOG.warning("User provided invalid data while updating a movie.")
@@ -73,13 +61,13 @@ class MovieUpdateView(LoginRequiredMixin, UpdateView):
 class MovieDeleteView(LoginRequiredMixin, DeleteView):
     template_name = "forms/delete_movie_form.html"
     model = Movie
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('viewer:movies')
 
 
 class GenreCreateView(FormView):
     template_name = "forms/form.html"
     form_class = GenreForm
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('viewer:genres')
 
     def form_valid(self, form):
         result = super().form_valid(form)
@@ -100,7 +88,7 @@ class GenreUpdateView(UpdateView):
     template_name = "forms/form.html"
     form_class = GenreForm
     model = Genre
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('viewer:genres')
 
     def form_invalid(self, form):
         LOG.warning("User provided invalid data while updating a genre.")
