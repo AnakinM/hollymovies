@@ -49,8 +49,7 @@
       <div class="nav-item dropdown">
           {% if user.is_authenticated %}
             <a class="nav-link dropdown-toggle" href="#" id="dropdownAuthenticatedUserMenu" data-bs-toggle="dropdown">
-            {% if user.first_name %}Hello, {{ user.first_name }}!
-            {% else %}Hello, {{ user.username }} with id {{ user.id }}!{% endif %}
+            Hello, {{ user.first_name|default:user.username }}
             </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownAuthenticatedUserMenu">
                 <a class="dropdown-item text-right" href="{% url 'accounts:logout' %}">Logout</a>
