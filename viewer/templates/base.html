@@ -26,6 +26,7 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'viewer:movies' %}">Movies</a>
         </li>
+      {% if user.is_authenticated %}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'viewer:create_movie' %}">Add new movie</a>
         </li>
@@ -35,6 +36,7 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'viewer:genres' %}">Genres</a>
         </li>
+      {% endif %}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'contact' %}">Contact</a>
         </li>

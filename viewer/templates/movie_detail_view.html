@@ -9,7 +9,9 @@
         <p>{{ movie.description }}</p>
         <small>Description length: {{ movie.description|length }}</small>
         <hr>
+        {% if user.is_authenticated %}
         <a class="btn btn-primary" href="{% url "viewer:update_movie" movie.id %}">Update</a>
         <a class="btn btn-danger" href="{% url "viewer:delete_movie" movie.id %}">Delete</a>
+        {% endif %}
     </div>
 {% endblock %}

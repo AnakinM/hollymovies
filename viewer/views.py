@@ -1,17 +1,22 @@
 from logging import getLogger
 
-from django.contrib.auth.views import LoginView
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, FormView, TemplateView, CreateView, UpdateView, DeleteView, DetailView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 
 from viewer.forms import MovieForm, GenreForm
 from viewer.models import Movie, Genre
 
 LOG = getLogger()
+
+
+class StaffRequiredMixin(UserPassesTestMixin):
+
+    def test_func(self):
+        return self.request.user.is_staff
 
 
 def search(request):
@@ -47,39 +52,52 @@ class MovieDetailView(DetailView):
 class MoviesView(ListView):
     template_name = "movies.html"
     model = Movie
+    paginate_by = 6
 
 
-class MovieCreateView(CreateView):
+class MovieCreateView(PermissionRequiredMixin, CreateView):
     template_name = 'forms/form.html'
     form_class = MovieForm
-    success_url = reverse_lazy('create_movie')
+    success_url = reverse_lazy('viewer:create_movie')
+    permission_required = "viewer.add_movie"
 
     def form_invalid(self, form):
         LOG.warning("User provided invalid data.")
         return super().form_invalid(form)
 
 
-class MovieUpdateView(LoginRequiredMixin, UpdateView):
+class MovieUpdateView(PermissionRequiredMixin, StaffRequiredMixin, UpdateView):
     template_name = "forms/form.html"
     form_class = MovieForm
     model = Movie
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('viewer:movies')
+    permission_required = "viewer.change_movie"
 
     def form_invalid(self, form):
         LOG.warning("User provided invalid data while updating a movie.")
         return super().form_invalid(form)
 
 
-class MovieDeleteView(LoginRequiredMixin, DeleteView):
+class MovieDeleteView(PermissionRequiredMixin, StaffRequiredMixin, DeleteView):
     template_name = "forms/delete_movie_form.html"
     model = Movie
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('viewer:movies')
+    permission_required = "viewer.delete_movie"
+
+    def test_func(self):
+        return super().test_func() and self.request.user.is_superuser
 
 
-class GenreCreateView(FormView):
+class GenreListView(ListView):
+    template_name = "genres.html"
+    model = Genre
+
+
+class GenreCreateView(PermissionRequiredMixin, FormView):
     template_name = "forms/form.html"
     form_class = GenreForm
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('viewer:genres')
+    permission_required = 'viewer.add_genre'
 
     def form_valid(self, form):
         result = super().form_valid(form)
@@ -91,16 +109,12 @@ class GenreCreateView(FormView):
         return result
 
 
-class GenreListView(ListView):
-    template_name = "genres.html"
-    model = Genre
-
-
-class GenreUpdateView(UpdateView):
+class GenreUpdateView(PermissionRequiredMixin, StaffRequiredMixin, UpdateView):
     template_name = "forms/form.html"
     form_class = GenreForm
     model = Genre
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('viewer:genres')
+    permission_required = 'viewer.change_genre'
 
     def form_invalid(self, form):
         LOG.warning("User provided invalid data while updating a genre.")
@@ -112,3 +126,6 @@ class GreetingView(View):
 
     def get(self, request):
         return HttpResponse(self.greeting)
+
+# Add genre - Permission
+# Update - Staff, Permission
