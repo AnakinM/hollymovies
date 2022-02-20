@@ -20,9 +20,10 @@ from django.views.generic import TemplateView
 from accounts.models import Profile
 from viewer.views import search, ContactView, GreetingView
 from viewer.models import Genre, Movie
+from viewer.admin import MovieAdmin, GenreAdmin
 
-admin.site.register(Genre)
-admin.site.register(Movie)
+admin.site.register(Genre, GenreAdmin)
+admin.site.register(Movie, MovieAdmin)
 admin.site.register(Profile)
 
 urlpatterns = [
