@@ -130,9 +130,12 @@ LOGOUT_REDIRECT_URL = 'index'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-print("Hello")
-print(DATABASES.get('default').get('NAME'))
+
 if config('DEBUG'):
+    print(config('DEBUG'))
+    print("Development set")
     from .development import *
 else:
+    print(config('DEBUG'))
+    print("Production set")
     from .production import *
