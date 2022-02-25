@@ -1,5 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from django.forms import ModelForm, ChoiceField, CharField, Textarea
+from django.forms.models import model_to_dict, fields_for_model
 
 from accounts.models import Profile
 
@@ -7,7 +9,7 @@ from accounts.models import Profile
 class SignUpForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
-        fields = ['username', 'first_name']
+        fields = ['username', 'email', 'first_name']
 
     def save(self, commit=True):
         result = super(SignUpForm, self).save(commit)
@@ -15,6 +17,13 @@ class SignUpForm(UserCreationForm):
         if commit:
             profile.save()
         return result
+
+
+class UserAccountUpdateForm(ModelForm):
+
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'email']
 
 
 class UserProfileUpdateForm(ModelForm):
@@ -27,7 +36,8 @@ class UserProfileUpdateForm(ModelForm):
 
     class Meta:
         model = Profile
-        fields = '__all__'
+        fields = ['image', 'gender', 'biography']
+        exclude = ['user']
 
     gender = ChoiceField(choices=GENDER_CHOICES, required=False)
     biography = CharField(label="Tell us your story with movies", widget=Textarea, required=False)

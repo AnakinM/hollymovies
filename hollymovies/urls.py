@@ -15,7 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic import TemplateView
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, \
+    PasswordResetCompleteView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -35,6 +36,10 @@ urlpatterns = [
     path('search/', search, name="search"),
     path('contact/', ContactView.as_view(), name='contact'),
     path('greeting/', GreetingView.as_view(greeting="Hello"), name='greeting'),
+    path('password-reset/', PasswordResetView.as_view(template_name='forms/password_reset.html'), name='password_reset'),
+    path('password-reset/done/', PasswordResetDoneView.as_view(template_name='password_reset_done.html'), name='password_reset_done'),
+    path('password-reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(template_name='forms/password_reset_confirm.html'), name='password_reset_confirm'),
+    path('password-reset-complete/', PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'), name='password_reset_complete'),
     path('', HomeView.as_view(), name='index'),
 ]
 
