@@ -20,11 +20,11 @@ class StaffRequiredMixin(UserPassesTestMixin):
 
 
 def search(request):
-    title = request.GET.get("title")
+    title = request.GET.get("movie_title")
     if title:
         data = Movie.objects.filter(title__contains=title)
-        return render(request, "search.html", context={'data': data, 'count': data.count()})
-    return render(request, "search.html", context={'data': None, 'count': 0})
+        return render(request, "search.html", context={'data': data, 'count': data.count(), 'movie_title': title})
+    return render(request, "search.html", context={'data': None, 'count': 0, 'movie_title': ''})
 
 
 # def home(request):
