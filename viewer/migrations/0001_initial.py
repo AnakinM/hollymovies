@@ -24,7 +24,6 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=128)),
-                ('image', models.ImageField(default='default_movie.jpg', upload_to='movies_thumbnails')),
                 ('rating', models.IntegerField()),
                 ('released', models.DateField()),
                 ('description', models.TextField()),
