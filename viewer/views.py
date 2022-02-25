@@ -1,5 +1,6 @@
 from logging import getLogger
 
+from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -31,8 +32,22 @@ def search(request):
 #     return render(request, "home.html")
 
 
-# class HomeView(TemplateView):
-#     template_name = "home.html"
+class HomeView(TemplateView):
+    template_name = "home.html"
+
+    def get(self, request):
+        movies_count = Movie.objects.all().count()
+        genres_count = Genre.objects.all().count()
+        users_count = User.objects.all().count()
+        oldest_movie = Movie.objects.all().order_by("released").first()
+        highest_rated_movie = Movie.objects.all().order_by("-rating").first()
+        return render(request, "home.html", context={
+            'movies_count': movies_count,
+            'genres_count': genres_count,
+            'users_count': users_count,
+            'oldest_movie': oldest_movie,
+            'highest_rated_movie': highest_rated_movie,
+        })
 
 
 # def contact(request):

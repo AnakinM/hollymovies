@@ -3,4 +3,10 @@
 {% block content %}
 <h1>Welcome to HollyMovies!</h1>
     <a class="btn btn-success" href="{% url 'greeting' %}">Greeting</a>
+    <h3 class="py-4">Site features:</h3>
+    <p>{{ movies_count }} movies in the database.</p>
+    <p>{{ genres_count }} genres in the database.</p>
+    <p>{{ users_count }} users in the database.</p>
+    <p>Oldest movie is {{ oldest_movie.title }}</p>
+    <p>Highest rated movie is {{ highest_rated_movie.title }}</p>
 {% endblock %}

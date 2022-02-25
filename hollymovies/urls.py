@@ -20,7 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from accounts.models import Profile
-from viewer.views import search, ContactView, GreetingView
+from viewer.views import search, ContactView, GreetingView, HomeView
 from viewer.models import Genre, Movie
 from viewer.admin import MovieAdmin, GenreAdmin
 
@@ -35,7 +35,7 @@ urlpatterns = [
     path('search/', search, name="search"),
     path('contact/', ContactView.as_view(), name='contact'),
     path('greeting/', GreetingView.as_view(greeting="Hello"), name='greeting'),
-    path('', TemplateView.as_view(template_name="home.html"), name='index'),
+    path('', HomeView.as_view(), name='index'),
 ]
 
 if settings.DEBUG:
