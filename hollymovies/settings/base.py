@@ -13,6 +13,8 @@ import os
 import django_heroku
 from decouple import config
 from pathlib import Path
+import boto3
+from botocore.config import Config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -128,8 +130,11 @@ LOGOUT_REDIRECT_URL = 'index'
 
 # Amazon storage service
 AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
+print(AWS_ACCESS_KEY_ID)
 AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
+print(AWS_SECRET_ACCESS_KEY)
 AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
+print(AWS_STORAGE_BUCKET_NAME)
 
 AWS_S3_FILE_OVERWRITE = False
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
